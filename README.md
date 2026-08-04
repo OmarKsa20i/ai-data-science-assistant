@@ -1,5 +1,13 @@
 # 🤖 AI Data Science Assistant
 
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Open_App-success?style=for-the-badge)](https://ai-data-science-assistant-rru8sprhuqrak2wawqpj7r.streamlit.app/)
+[![Python](https://img.shields.io/badge/Python-3.13-blue?style=for-the-badge&logo=python)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-Web_App-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
+
+🌐 **Live Application:**  
+https://ai-data-science-assistant-rru8sprhuqrak2wawqpj7r.streamlit.app/
+
 An interactive Data Science application built with **Python** and **Streamlit** that simplifies the complete Data Science workflow, from data exploration and cleaning to machine learning model training and prediction.
 
 ---
@@ -115,33 +123,6 @@ AI-Data-Science-Assistant/
 
 ---
 
-## 🚀 Installation
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/YOUR_USERNAME/AI-Data-Science-Assistant.git
-```
-
-### 2. Navigate to the project folder
-
-```bash
-cd AI-Data-Science-Assistant
-```
-
-### 3. Install the required libraries
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Run the application
-
-```bash
-streamlit run app.py
-```
-
----
 
 ## 🎯 Project Objectives
 
