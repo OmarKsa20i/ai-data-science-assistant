@@ -1,5 +1,12 @@
 # 🤖 AI Data Science Assistant
 
+<<<<<<< HEAD
+=======
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Open_App-success?style=for-the-badge)](https://ai-data-science-assistant-rru8sprhuqrak2wawqpj7r.streamlit.app/)
+[![Python](https://img.shields.io/badge/Python-3.13-blue?style=for-the-badge&logo=python)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-Web_App-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
+>>>>>>> 894e99f4d11bf4d2ff5be8b387aea91effc5f2f1
 
 🌐 **Live Application:**  
 https://ai-data-science-assistant-rru8sprhuqrak2wawqpj7r.streamlit.app/
