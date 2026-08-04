@@ -165,12 +165,11 @@ streamlit run app.py
 - Cloud deployment
 
 ---
-
 ## 👨‍💻 Author
 
-**Data Science Student**  
+**Omar Yousef Al-Juhani**  
+Data Science Student  
 Taibah University
-
 ---
 
 ## ⭐ Support
