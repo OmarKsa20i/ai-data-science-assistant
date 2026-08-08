@@ -12,11 +12,14 @@ import utils.preprocessing as prep
 st.set_page_config(
     page_title="AI Data Science Assistant", page_icon="🤖", layout="wide"
 )
+
+
 st.title("🤖 AI Data Science Assistant")
 st.write(
     "Upload your dataset, understand it, prepare it, train a model, evaluate it, "
     "and make predictions."
 )
+
 
 # 1. Data Understanding
 st.header("1. Data Understanding")
@@ -124,10 +127,21 @@ st.download_button(
 )
 
 # 3. Modeling
+
 st.header("3. Modeling")
 st.subheader("🤖 Machine Learning Task Detection")
+
 target_column = st.selectbox("🎯 Select Target Column", df.columns)
-is_classification = df[target_column].dtype == "object"
+
+target = df[target_column]
+
+if target.dtype == "object" or target.dtype.name == "category":
+    is_classification = True
+elif target.nunique() <= 10:
+    is_classification = True
+else:
+    is_classification = False
+
 if is_classification:
     st.success("🤖 Classification Problem Detected")
     st.info(
@@ -140,46 +154,60 @@ else:
         "💡 Recommended Model: Linear Regression\n\n"
         "Reason: This model is simple, fast, and suitable for predicting continuous numeric values."
     )
+# ============================
+# 3.1 Train/Test Split
+# ============================
 
-st.subheader("📦 Data Preparation for Modeling")
-try:
-    X_train, X_test, y_train, y_test = prep.prepare_train_test_data(df, target_column)
-except ValueError as error:
-    st.error(str(error))
-    st.stop()
+X_train, X_test, y_train, y_test = prep.prepare_train_test_data(
+    df,
+    target_column
+)
 
-X = pd.concat([X_train, X_test])
-st.success("✅ Dataset split successfully!")
-st.write(f"Training Samples: {len(X_train)}")
-st.write(f"Testing Samples: {len(X_test)}")
+# ============================
+# 3.2 Model Training
+# ============================
 
 if is_classification:
+
     model = mu.train_random_forest(X_train, y_train)
+
     predictions = model.predict(X_test)
+
     accuracy = mu.get_accuracy(y_test, predictions)
-    st.success("✅ Random Forest model trained successfully!")
+
 else:
+
     model = mu.train_linear_regression(X_train, y_train)
+
     predictions = model.predict(X_test)
-    tree_model = mu.train_decision_tree(X_train, y_train)
+
+    r2, mae = mu.get_regression_metrics(
+        y_test,
+        predictions
+    )
+
+    tree_model = mu.train_decision_tree(
+        X_train,
+        y_train
+    )
+
     tree_predictions = tree_model.predict(X_test)
-    r2, mae = mu.get_regression_metrics(y_test, predictions)
-    tree_r2, _ = mu.get_regression_metrics(y_test, tree_predictions)
-    st.success("✅ Linear Regression model trained successfully!")
+
+    tree_r2, _ = mu.get_regression_metrics(
+        y_test,
+        tree_predictions
+    )
+
+
 # ============================
 # 4. Evaluation
-# ============================
 
 st.header("4. Evaluation")
 
 if is_classification:
-
-    # Display classification accuracy
     st.metric("Accuracy", f"{accuracy:.2%}")
 
 else:
-
-    # Display regression predictions
     st.subheader("Model Prediction")
 
     results = pd.DataFrame({
@@ -189,7 +217,6 @@ else:
 
     st.dataframe(results.head())
 
-    # Display evaluation metrics
     col1, col2 = st.columns(2)
 
     with col1:
@@ -198,7 +225,6 @@ else:
     with col2:
         st.metric("MAE", round(mae, 2))
 
-    # Compare models
     st.subheader("🏆 Model Comparison")
 
     comparison_df = pd.DataFrame({
@@ -213,6 +239,7 @@ else:
     })
 
     st.dataframe(comparison_df)
+
 
 # 5. Deployment
 st.header("5. Deployment")
@@ -231,13 +258,25 @@ if st.button("📂 Load Model"):
         st.error("❌ No saved model found.")
 
 st.subheader("🔮 Predict New Data")
+
+X = df.drop(columns=[target_column]).copy()
+
 input_data = {
-    column: st.number_input(f"Enter {column}", value=0.0) for column in X.columns
+    column: st.number_input(
+        f"Enter {column}",
+        value=0.0
+    )
+    for column in X.columns
 }
+
 if st.button("🔮 Predict"):
     if os.path.exists("models/model.joblib"):
         loaded_model = mu.load_model("models/model.joblib")
-        prediction = loaded_model.predict(pd.DataFrame([input_data]))
+
+        prediction = loaded_model.predict(
+            pd.DataFrame([input_data])
+        )
+
         st.success(f"Prediction: {prediction[0]}")
     else:
         st.error("❌ No saved model found.")
